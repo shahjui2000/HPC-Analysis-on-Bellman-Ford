@@ -116,13 +116,13 @@ int main(int argc, char* argv[])
 
 	int k;
 	//**********************
-	omp_set_num_threads(P);
+	omp_set_num_threads(P); //sets the number of processors
 	clock_gettime(CLK, &start_alg);	/* Start the algo timer */
 
 	/*----------------------Core algorithm starts here----------------------------------------------*/
 
 	
-	#pragma omp parallel for private(i, k)
+	#pragma omp parallel for private(i, k) //for parallelism
 	for(i=0; i< noV; i++) //iteration for noV-1 number of times needed in Bellman-Ford
 	{
 		for (k = 0; k < noE; k++)//iterate over each edge
