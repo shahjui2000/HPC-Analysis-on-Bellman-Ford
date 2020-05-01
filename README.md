@@ -6,11 +6,11 @@ Comparision of serial implementation and parallel implementation on 4,8, 12 and 
 
 ## Requisites: 
 1. C libraries: 
-   _ stdio.h, math.h, time.h, string.h, stdlib.h, limits.h
-   _ omp.h
+   - stdio.h, math.h, time.h, string.h, stdlib.h, limits.h
+   - omp.h
 
 2. Python libraries: 
-   _ subprocess, os, config
+   - subprocess, os, config
   
 ## Execution:
 1. Run main.py which calls serial.c and parallel.c. 
