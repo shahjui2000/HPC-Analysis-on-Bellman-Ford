@@ -63,43 +63,44 @@ int main(int argc, char* argv[])
 	sprintf(outputFileName,"output/%s_%s_%s_%s_output.txt",problem_name,approach_name,argv[1],argv[2]);	
 
 	//**********************
-	srand ( time(NULL) );
-	int noV = N;
-	int noE = (noV*(noV-1))/2;
+	srand ( time(NULL) ); //for randomization everytime the code is runned
+	
+	int noV = N; //number of vertices in graph is set equal to problem size N
+	int noE = (noV*(noV-1))/2; //number of edges in graph is set equal to N(N-1)/2
 	int i,j;
-	// printf("%d",noE);
-	// printf("hi");
-	int edge[noE][3];
+	
+	int edge[noE][3]; //Defining edge having the structure of (A,B,wight) where A and B are 
+	 		  //the two nodes between which the edge exists
 
 	i = 0;
-	while(i < noE)
+	while(i < noE) //loop goes on until noE number of edges are not created
 	{
 		// printf("heya:%d ", i);
-		edge[i][0] = rand()%noV ;
-		edge[i][1] = rand()%noV ;
-		edge[i][2] = rand()%50;
+		edge[i][0] = rand()%noV ; //randomly assigning node A
+		edge[i][1] = rand()%noV ; //randomly assigning node B
+		edge[i][2] = rand()%50 - 10; //randomly assigning weight in range -10 to 40 (negative weights allowed)
  
-		if(edge[i][0] == edge[i][1])
+		if(edge[i][0] == edge[i][1]) //if it is a self-edge, weight is 0 that is A-A or B-B
 		{
 			edge[i][2] = 0;
 			continue;
 		}
 		else
 		{
-			for(j = 0; j < i; j++)
+			for(j = 0; j < i; j++)  //checks that the new edge is not a duplicate of the old.
 			{
 				if((edge[i][0] == edge[j][0] && edge[i][1] == edge[j][1]) || (edge[i][0] == edge[j][1] && edge[i][1] == edge[j][0]))
 				{
-					i--;
+					i--; //if it is a duplicate, decreases the counter so as to disregard the edge
 				}
 			}
 		}
 		
-		i++;
+		i++; //updates counter of number of edges formed as of yet
 	}
     printf("---------------------------------------------\n");
     printf("Edge Description:\n");
-    for(i = 0; i< noE; i++)
+    for(i = 0; i< noE; i++) //prints the edge description
     {
         printf("NoE %d: \t %d ----- %d: \t %d\n",i+1,edge[i][0] + 1,edge[i][1] + 1, edge[i][2] );
     }
@@ -107,11 +108,11 @@ int main(int argc, char* argv[])
 
 	int* dist = (int*)malloc(sizeof(int)*noV);
 
-    for (i = 0; i < noV; i++)
+    for (i = 0; i < noV; i++) //allocate initial distances of each vertex as infinity
         dist[i]   = INT_MAX;
 	
 	int src = 0;
-    dist[src] = 0;
+    dist[src] = 0;//allocate distance of source vertex as 0, since we are finding distance all vertices to that of source
 
 	int k;
 	//**********************
@@ -122,17 +123,17 @@ int main(int argc, char* argv[])
 
 	
 	#pragma omp parallel for private(i, k)
-	for(i=0; i< noV; i++)
+	for(i=0; i< noV; i++) //iteration for noV-1 number of times needed in Bellman-Ford
 	{
-		for (k = 0; k < noE; k++)
+		for (k = 0; k < noE; k++)//iterate over each edge
 		{
             
-            if( dist[edge[k][0]] != INT_MAX)
+            if( dist[edge[k][0]] != INT_MAX)//If A is not infinity 
             {
-                if(dist[edge[k][0]] + edge[k][2] < dist[edge[k][1]] && edge[k][1]!=0)
-                    dist[edge[k][1]] = dist[edge[k][0]]+edge[k][2];
+                if(dist[edge[k][0]] + edge[k][2] < dist[edge[k][1]] && edge[k][1]!=0) //Bellman-Ford algo: if dis(A)+weight<dist(B) 
+                    dist[edge[k][1]] = dist[edge[k][0]]+edge[k][2];//update distance of B
             }
-            if( dist[edge[k][1]] != INT_MAX)
+            if( dist[edge[k][1]] != INT_MAX)//Same logic for B since our graph is bidirectional
             {
                 if(dist[edge[k][1]] + edge[k][2] < dist[edge[k][0]] && edge[k][0]!=0)
                     dist[edge[k][0]] = dist[edge[k][1]]+edge[k][2];
