@@ -5,11 +5,11 @@ Analysis on how parallel and serial implementation of the Bellman Ford Algorithm
 Comparision of serial implementation and parallel implementation on 4,8, 12 and 16 processors on the grounds of speedup, execution time and effeciency.
 
 ## Requisites: 
-  1. C libraries: 
+1. C libraries: 
    _ stdio.h, math.h, time.h, string.h, stdlib.h, limits.h
    _ omp.h
 
-  2. Python libraries: 
+2. Python libraries: 
    _ subprocess, os, config
   
 ## Execution:
