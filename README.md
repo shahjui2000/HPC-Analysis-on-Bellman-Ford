@@ -2,7 +2,7 @@
 
 Analysis on how parallel and serial implementation of the Bellman Ford Algorithm affects the performance.
 
-Comparision of serial implementation and parallel implementation on 4,8, 12 and 16 processors on the grounds of speedup, execution time and effeciency.
+Comparision of serial implementation and parallel implementation on 4,8, 12 and 16 processors on the grounds of speedup, execution time and efficiency.
 
 ## Requisites: 
 1. C libraries: 
